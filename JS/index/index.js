@@ -1,3 +1,5 @@
+/*
+
 document.addEventListener('DOMContentLoaded', function () {
     // Seleccionar el campo de usuario y contraseña
     const usernameInput = document.getElementById('username');
@@ -18,3 +20,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+*/

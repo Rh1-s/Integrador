@@ -58,5 +58,31 @@ class Negocio
 
         return $res;
     }
+
+    function Login($Usuario, $Contra){
+        $sql = "SELECT * FROM `login` WHERE Nombre_Usuario = '$Usuario' and Contrasena = '$Contra'";
+        $obj = new Conexion();
+        $conn = $obj->conecta();
+        $res = mysqli_query($conn, $sql) or
+            die(mysqli_error($conn));
+        $vec = array();
+        while($fila = mysqli_fetch_array($res)){
+            $vec[] = $fila;
+        }
+        return $vec;
+    }
+
+    function LoginExitoso($Usuario, $Contra){
+        $sql = "SELECT * FROM `login` WHERE Nombre_Usuario = '$Usuario' and Contrasena = '$Contra'";
+        $obj = new Conexion();
+        $conn = $obj->conecta();
+        $res = mysqli_query($conn, $sql) or
+            die(mysqli_error($conn));
+        if (mysqli_num_rows($res) == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
 ?>

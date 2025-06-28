@@ -32,6 +32,7 @@
 <body>
     <?php
     include '../Negocio/negocio.php';
+    session_start();
     $obj = new Negocio();
     $vec = $obj->lisAlu();
     $vec2 = $obj->lisSec();
