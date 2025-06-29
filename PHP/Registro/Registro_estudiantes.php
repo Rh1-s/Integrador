@@ -15,6 +15,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
     <!-- Bootstrap, Iconos, Estilos -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../CSS/Reportes/reportes.css">
@@ -105,7 +106,7 @@
                                         <th scope="col">Nombres</th>
                                         <th scope="col">F. Nacimiento</th>
                                         <th scope="col">F. Registro</th>
-                                        <th scope="col">Eliminar</th>
+                                        <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -121,8 +122,23 @@
                                             <td><?= $alu['Fec_Nacimiento'] ?></td>
                                             <td><?= $alu['Fec_Registro'] ?></td>
                                             <td>
-                                                <a href="../Configuracion/controller.php?action=delete&AlumnoID=<?= $alu['AlumnoID'] ?>">
-                                                    <img style="width: 25px; height: 25px;" src="../../src/images/Eliminar.png" alt="Eliminar" class="logo-img">
+                                                <button 
+                                                    type="button" 
+                                                    class="btn btn-sm btn-outline-primary me-2 btn-editar"
+                                                    data-id="<?= $alu['AlumnoID'] ?>"
+                                                    data-dni="<?= $alu['DNI'] ?>"
+                                                    data-nombres="<?= $alu['Nombres'] ?>"
+                                                    data-apellidos="<?= $alu['Apellidos'] ?>"
+                                                    data-nacimiento="<?= $alu['Fec_Nacimiento'] ?>"
+                                                    data-registro="<?= $alu['Fec_Registro'] ?>"
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#modalEditarAlumno"
+                                                >
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+
+                                                <a href="../Configuracion/controller.php?action=delete&AlumnoID=<?= $alu['AlumnoID'] ?>" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -139,6 +155,53 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Editar Alumno -->
+    <div class="modal fade" id="modalEditarAlumno" tabindex="-1" aria-labelledby="modalEditarAlumnoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="../Configuracion/controller.php" method="POST">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Editar Alumno</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+            <input type="hidden" name="AlumnoID" id="editAlumnoID">
+
+            <div class="mb-3">
+                <label for="editDNI" class="form-label">DNI</label>
+                <input type="text" name="dni" id="editDNI" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="editNombres" class="form-label">Nombres</label>
+                <input type="text" name="nombres" id="editNombres" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="editApellidos" class="form-label">Apellidos</label>
+                <input type="text" name="apellidos" id="editApellidos" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="editNacimiento" class="form-label">Fecha de Nacimiento</label>
+                <input type="date" name="fecha_nacimiento" id="editNacimiento" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="editRegistro" class="form-label">Fecha de Registro</label>
+                <input type="date" name="fecha_registro" id="editRegistro" class="form-control" required>
+            </div>
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" name="editarAlumno" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
 <script>
 $(document).ready(function() {
     $('#alumnos-table').DataTable({
@@ -154,6 +217,17 @@ $(document).ready(function() {
             infoEmpty: "Mostrando 0 registros",
             infoFiltered: "(filtrado de _MAX_ registros totales)"
         }
+    });
+});
+$(document).ready(function() {
+    $('.btn-editar').on('click', function() {
+        const button = $(this);
+        $('#editAlumnoID').val(button.data('id'));
+        $('#editDNI').val(button.data('dni'));
+        $('#editNombres').val(button.data('nombres'));
+        $('#editApellidos').val(button.data('apellidos'));
+        $('#editNacimiento').val(button.data('nacimiento'));
+        $('#editRegistro').val(button.data('registro'));
     });
 });
 </script>

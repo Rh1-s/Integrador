@@ -40,6 +40,24 @@ if (isset($_POST["guardarAlumno"])) {
         echo "<script>alert('Error al registrar alumno');</script>";
     }
 }
+
+if (isset($_POST['editarAlumno'])) {
+    $id = $_POST['AlumnoID'];
+    $dni = $_POST['dni'];
+    $nombres = $_POST['nombres'];
+    $apellidos = $_POST['apellidos'];
+    $nac = $_POST['fecha_nacimiento'];
+    $reg = $_POST['fecha_registro'];
+
+    $obj = new Negocio();
+    $res = $obj->editarAlumno($id, $dni, $nombres, $apellidos, $nac, $reg);
+
+    if ($res) {
+        echo "<script>alert('Los datos del alumno han sido editados'); window.location.href = '../Registro/Registro_estudiantes.php';</script>";
+    } else {
+        echo "<script>alert('Error al editar alumno');</script>";
+    }
+}
 //Boton Editar
 /*
 if (isset($_POST["botoneditar"])) {

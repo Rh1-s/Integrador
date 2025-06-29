@@ -106,5 +106,23 @@ class Negocio
         return mysqli_query($conn, $sql);
     }
 
+    function editarAlumno($id, $dni, $nombres, $apellidos, $nac, $reg) {
+        $sql = "UPDATE alumnos SET DNI=?, Nombres=?, Apellidos=?, Fec_Nacimiento=?, Fec_Registro=? WHERE AlumnoID=?";
+        $obj = new Conexion();
+        $conn = $obj->conecta();
+
+        $stmt = mysqli_prepare($conn, $sql);
+        if (!$stmt) {
+            die("Error al preparar consulta: " . mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param($stmt, "sssssi", $dni, $nombres, $apellidos, $nac, $reg, $id);
+
+        $result = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return $result;
+    }
+
 }
+
 ?>
