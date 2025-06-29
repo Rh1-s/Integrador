@@ -23,6 +23,23 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['Matri
     }
 }
 
+// Registrar alumno
+if (isset($_POST["guardarAlumno"])) {
+    $dni = $_POST["dni"];
+    $nombres = $_POST["nombres"];
+    $apellidos = $_POST["apellidos"];
+    $fecha_nac = $_POST["fecha_nacimiento"];
+    $fecha_reg = $_POST["fecha_registro"];
+
+    $obj = new Negocio();
+    $res = $obj->addAlumno($dni, $nombres, $apellidos, $fecha_nac, $fecha_reg);
+
+    if ($res) {
+        header("Location: ../Registro/Registro_estudiantes.php");
+    } else {
+        echo "<script>alert('Error al registrar alumno');</script>";
+    }
+}
 //Boton Editar
 /*
 if (isset($_POST["botoneditar"])) {

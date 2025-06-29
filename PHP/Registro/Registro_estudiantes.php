@@ -1,74 +1,138 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Matrícula</title>
-    <link rel="stylesheet" href="../assets/style.css">
+    <title>Registro de Alumnos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap, Iconos, Estilos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../CSS/Reportes/reportes.css">
+    <link rel="icon" href="../../src/images/logo.ico">
+
+    <!-- jQuery + SweetAlert2 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
-    <h2>Formulario de Matrícula - 2025</h2>
-    <form action="../controllers/studentController.php" method="POST">
-        <label>DNI o Código:</label>
-        <input type="text" name="dni" required><br>
+    <?php session_start(); ?>
 
-        <label>Apellidos y Nombres:</label>
-        <input type="text" name="nombres_apellidos" required><br>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="../../src/images/logo.jpg" alt="Logo SnowBox" class="logo-img">
+            </a>
+            <span class="navbar-text text-white">Administrador</span>
+            <a href="../../index.html" class="text-white"><i class="bi bi-box-arrow-left"></i></a>
+        </div>
+    </nav>
 
-        <label>Fecha de Nacimiento:</label>
-        <input type="date" name="fecha_nacimiento" required><br>
+    <!-- Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-2 custom-sidebar">
+                <div class="nav flex-column">
+                    <a href="../Inventario/dash.php?user=1" class="nav-link active"><i class="bi bi-box-seam"></i> Estudiantes</a>
+                    <a href="../Matricula/registro.php" class="nav-link"><i class="bi bi-truck"></i> Matrícula</a>
+                    <a href="../Proveedores/dash.php?user=1" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
+                    <a href="../Reportes/dash.php?user=1" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
+                    <a href="../Configuracion/dash.php?user=1" class="nav-link"><i class="bi bi-gear"></i> Configuración</a>
+                </div>
+            </div>
 
-        <label>Sexo:</label>
-        <select name="sexo" required>
-            <option value="H">Hombre</option>
-            <option value="M">Mujer</option>
-        </select><br>
+            <!-- Main -->
+            <div class="col-10 mt-3">
+                <h4>Registro de Alumno</h4>
+                <form action="../Configuracion/controller.php" method="POST" class="row g-3">
+                    <div class="card">
+                        <div class="card-body row g-3">
+                            <div class="col-md-6">
+                                <label for="dni" class="form-label">DNI</label>
+                                <input type="text" name="dni" id="dni" class="form-control" required>
+                            </div>
 
-        <label>Nacionalidad:</label>
-        <input type="text" name="nacionalidad"><br>
+                            <div class="col-md-6">
+                                <label for="nombres" class="form-label">Nombres</label>
+                                <input type="text" name="nombres" id="nombres" class="form-control" required>
+                            </div>
 
-        <label>Situación de Matrícula:</label>
-        <input type="text" name="situacion_matricula"><br>
+                            <div class="col-md-6">
+                                <label for="apellidos" class="form-label">Apellidos</label>
+                                <input type="text" name="apellidos" id="apellidos" class="form-control" required>
+                            </div>
 
-        <label>Padre vive:</label>
-        <input type="checkbox" name="vive_padre" value="1"><br>
+                            <div class="col-md-6">
+                                <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control">
+                            </div>
 
-        <label>Madre vive:</label>
-        <input type="checkbox" name="vive_madre" value="1"><br>
+                            <div class="col-md-6">
+                                <label for="fecha_registro" class="form-label">Fecha de Registro</label>
+                                <input type="date" name="fecha_registro" id="fecha_registro" class="form-control" required>
+                            </div>
 
-        <label>Lengua Materna:</label>
-        <input type="text" name="lengua_materna"><br>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <button type="submit" name="guardarAlumno" class="btn btn-primary w-100">Registrar Alumno</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
-        <label>Segunda Lengua:</label>
-        <input type="text" name="segunda_lengua"><br>
-
-        <label>¿Trabaja?:</label>
-        <input type="checkbox" name="trabaja" value="1"><br>
-
-        <label>Horas que trabaja:</label>
-        <input type="number" name="horas_trabaja"><br>
-
-        <label>Escolaridad de la madre:</label>
-        <input type="text" name="escolaridad_madre"><br>
-
-        <label>Nacimiento registrado:</label>
-        <input type="checkbox" name="nacimiento_registrado" value="1"><br>
-
-        <label>Tipo de discapacidad:</label>
-        <input type="text" name="tipo_discapacidad"><br>
-
-        <label>País:</label>
-        <input type="text" name="pais"><br>
-
-        <label>Fecha de Matrícula:</label>
-        <input type="date" name="fecha_matricula"><br>
-
-        <label>Grado y Sección:</label>
-        <input type="text" name="grado_seccion"><br>
-
-        <label>Escuela de procedencia:</label>
-        <input type="text" name="escuela_procedencia"><br>
-
-        <button type="submit">Registrar</button>
-    </form>
+                <!-- Tabla de Alumnos -->
+                <form action="../Reportes/generar_pdf_alumnos.php" method="POST">
+                    <div class="row mt-4">
+                        <div class="col" data-simplebar style="max-height: 420px;">
+                            <table class="table table-hover" id="alumno-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">DNI</th>
+                                        <th scope="col">Nombres</th>
+                                        <th scope="col">F. Nacimiento</th>
+                                        <th scope="col">F. Registro</th>
+                                        <th scope="col">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include '../Negocio/negocio.php';
+                                    $obj = new Negocio();
+                                    $alumnos = $obj->lisAluCompleto(); // NUEVA FUNCIÓN
+                                    foreach ($alumnos as $alu) {
+                                    ?>
+                                        <tr>
+                                            <td><?= $alu['DNI'] ?></td>
+                                            <td><?= $alu['Nombres'] . ' ' . $alu['Apellidos'] ?></td>
+                                            <td><?= $alu['Fec_Nacimiento'] ?></td>
+                                            <td><?= $alu['Fec_Registro'] ?></td>
+                                            <td>
+                                                <a href="../Configuracion/controller.php?action=delete&AlumnoID=<?= $alu['AlumnoID'] ?>">
+                                                    <img style="width: 25px; height: 25px;" src="../../src/images/Eliminar.png" alt="Eliminar" class="logo-img">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                                    
+                    </div>
+                    <div class="row mt-5">
+                        <div class="d-flex justify-content-center">
+                            <td><button id="generarReporte" name="generarReporte" class="btn btn-success w-25">Generar reporte</button></td>
+                        </div>
+                    </div>
+                </form>
+                   
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

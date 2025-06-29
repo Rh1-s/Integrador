@@ -84,5 +84,27 @@ class Negocio
             return 0;
         }
     }
+
+    // Funciones Registro de alumnos
+    function lisAluCompleto() {
+    $sql = "SELECT * FROM alumnos";
+    $obj = new Conexion();
+    $res = mysqli_query($obj->conecta(), $sql) or die(mysqli_error($obj->conecta()));
+    $vec = array();
+    while($fila = mysqli_fetch_assoc($res)){
+        $vec[] = $fila;
+    }
+    return $vec;
+    }
+
+    
+    function addAlumno($DNI, $Nombres, $Apellidos, $Fec_Nacimiento, $Fec_Registro) {
+        $sql = "INSERT INTO alumnos (DNI, Nombres, Apellidos, Fec_Nacimiento, Fec_Registro)
+                VALUES ('$DNI', '$Nombres', '$Apellidos', '$Fec_Nacimiento', '$Fec_Registro')";
+        $obj = new Conexion();
+        $conn = $obj->conecta();
+        return mysqli_query($conn, $sql);
+    }
+
 }
 ?>
