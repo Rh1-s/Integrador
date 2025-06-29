@@ -48,7 +48,7 @@
             <span class="navbar-text text-white">
                 Administrador
             </span>
-            <a href="../../index.html" class="text-white"><i class="bi bi-box-arrow-left"></i></a>
+            <a href="../../index.php" class="text-white"><i class="bi bi-box-arrow-left"></i></a>
         </div>
     </nav>
 
@@ -58,7 +58,7 @@
             <div class="col-2 custom-sidebar">
                 <div class="nav flex-column">
 
-                    <a href="../Inventario/dash.php?user=1" class="nav-link"><i class="bi bi-box-seam"></i> Estudiantes</a>
+                    <a href="../Registro/Registro_estudiantes.php?user=1" class="nav-link"><i class="bi bi-box-seam"></i> Estudiantes</a>
                     <a href="registro.php" class="nav-link active"><i class="bi bi-truck"></i> Matricula</a>
                     <a href="../Proveedores/dash.php?user=1" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
                     <a href="dash.php?user=1" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
