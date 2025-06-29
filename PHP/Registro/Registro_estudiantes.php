@@ -6,15 +6,20 @@
     <title>Registro de Alumnos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- jQuery + SweetAlert2 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
     <!-- Bootstrap, Iconos, Estilos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../CSS/Reportes/reportes.css">
     <link rel="icon" href="../../src/images/logo.ico">
 
-    <!-- jQuery + SweetAlert2 -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -82,12 +87,18 @@
                         </div>
                     </div>
                 </form>
-
+                <div class="d-flex justify-content-end mb-2">
+                    <form action="../Reportes/generar_pdf_alumnos.php" method="POST">
+                        <button id="generarReporte" name="generarReporte" class="btn btn-success">
+                            <i class="bi bi-file-earmark-pdf"></i> Generar Reporte
+                        </button>
+                    </form>
+                </div>
                 <!-- Tabla de Alumnos -->
                 <form action="../Reportes/generar_pdf_alumnos.php" method="POST">
                     <div class="row mt-4">
                         <div class="col" data-simplebar style="max-height: 420px;">
-                            <table class="table table-hover" id="alumno-table">
+                            <table id="alumnos-table" class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">DNI</th>
@@ -123,16 +134,29 @@
                         </div>
                                     
                     </div>
-                    <div class="row mt-5">
-                        <div class="d-flex justify-content-center">
-                            <td><button id="generarReporte" name="generarReporte" class="btn btn-success w-25">Generar reporte</button></td>
-                        </div>
-                    </div>
                 </form>
                    
             </div>
         </div>
     </div>
+<script>
+$(document).ready(function() {
+    $('#alumnos-table').DataTable({
+        language: {
+            search: "Buscar:",
+            lengthMenu: "Mostrar _MENU_ registros por página",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ alumnos",
+            paginate: {
+                previous: "Anterior",
+                next: "Siguiente"
+            },
+            zeroRecords: "No se encontraron resultados",
+            infoEmpty: "Mostrando 0 registros",
+            infoFiltered: "(filtrado de _MAX_ registros totales)"
+        }
+    });
+});
+</script>
 </body>
 
 </html>
