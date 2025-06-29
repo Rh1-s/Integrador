@@ -26,7 +26,7 @@ if ($action === 'login') {
                 title: 'Error',
                 text: 'Usuario no encontrado'
             }).then(() => {
-                window.location.href = '../../index.html';
+                window.location.href = '../../index.php';
             });
         </script>";
         exit;
