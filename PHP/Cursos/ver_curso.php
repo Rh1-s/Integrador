@@ -79,7 +79,7 @@ $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
     <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="../../src/images/logo.jpg" alt="Logo SnowBox" class="logo-img">
+            <img src="../../src/images/logo.png" alt="Logo SnowBox" class="logo-img">
         </a>
         <span class="navbar-text text-white">Administrador</span>
         <a href="../../index.php" class="text-white"><i class="bi bi-box-arrow-left"></i></a>
@@ -110,7 +110,7 @@ $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
                             <div class="card course-card">
                                 <a href="detalle_curso.php?curso_id=<?= $curso['CursoID'] ?>" class="stretched-link"></a>
                                 <span class="course-progress"><?= rand(20, 90) ?>%</span>
-                                <img src="../../src/images/logo.jpg" alt="Imagen Curso" class="course-image">
+                                <img src="../../src/images/logo.png" alt="Imagen Curso" class="course-image">
                                 <div class="course-body">
                                     <h5 class="fw-bold"><?= $curso['Nombre_Curso'] ?></h5>
                                     <p class="mb-1"><small>ID: <?= $curso['CursoID'] ?> - <?= $curso['Estado'] ?></small></p>

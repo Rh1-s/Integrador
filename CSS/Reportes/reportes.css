@@ -6,7 +6,7 @@
 }
 
 .custom-navbar {
-    background-color: #F53914;  /* Cambia este valor por el color que prefieras */
+    background-color: #0d1b2a;  /* Cambia este valor por el color que prefieras */
     height: 60px;  /* Ajusta la altura como desees */
     padding-top: 5px;
     padding-bottom: 5px;
@@ -15,7 +15,7 @@
 /* Sidebar */
 .custom-sidebar {
     height: calc(100vh - 60px); /* Ajusta la altura restando la altura del navbar */
-    background-color: #F53914; /* Color del sidebar */
+    background-color: #0d1b2a; /* Color del sidebar */
     padding-top: 0; /* Eliminar el padding superior */
     margin-top: 0; /* Eliminar el margen superior */
     position: sticky; /* Mantener el sidebar en su lugar al hacer scroll */

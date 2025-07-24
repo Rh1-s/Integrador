@@ -43,7 +43,7 @@ if (!$curso) {
 
 <div class="container mt-4">
     <div class="card card-course">
-        <img src="../../src/images/logo.jpg" alt="Imagen curso" class="course-image">
+        <img src="../../src/images/logo.png" alt="Imagen curso" class="course-image">
         <div class="card-body">
             <h3 class="fw-bold mb-3"><?= htmlspecialchars($curso['Nombre_Curso']) ?></h3>
             <p><strong>Descripción:</strong> <?= $curso['Descripcion'] ? htmlspecialchars($curso['Descripcion']) : 'Sin descripción'; ?></p>

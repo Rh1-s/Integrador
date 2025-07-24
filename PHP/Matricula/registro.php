@@ -43,7 +43,7 @@
     <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../../src/images/logo.jpg" alt="Logo SnowBox" class="logo-img">
+                <img src="../../src/images/logo.png" alt="Logo SnowBox" class="logo-img">
             </a>
             <span class="navbar-text text-white">
                 Administrador
