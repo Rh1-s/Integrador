@@ -16,7 +16,6 @@ class Negocio
         return $vec;
     }
 
-<<<<<<< HEAD
 function lisAul(){
     $sql = "SELECT SeccionID, Nombre_Seccion, Cupo_Maximo FROM secciones";
     $obj = new Conexion();
@@ -29,8 +28,6 @@ function lisAul(){
     return $vec;
 }
 
-=======
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
     function lisSec(){
         $sql = "select SeccionID, Nombre_Seccion from secciones";
         $obj = new Conexion();
@@ -138,7 +135,6 @@ function lisAul(){
         return $result;
     }
 
-<<<<<<< HEAD
     function lisDocentes() {
     $sql = "SELECT DocenteID, DNI, Nombres, Apellidos, Direccion, Fec_Registro FROM Docentes";
     $obj = new Conexion();
@@ -203,8 +199,6 @@ function editarDocente($id, $dni, $nombres, $apellidos, $direccion, $registro) {
     return $result;
 }
 
-=======
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
 }
 
 ?>

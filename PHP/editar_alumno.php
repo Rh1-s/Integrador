@@ -56,11 +56,7 @@
     </div>
 
     <?php
-<<<<<<< HEAD
     $conn = new mysqli("localhost", "root", "", "Institucion");
-=======
-    $conn = new mysqli("localhost", "root", "", "COLEGIO");
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         $result = $conn->query("SELECT * FROM Alumnos WHERE AlumnoID = $id");

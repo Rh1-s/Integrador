@@ -62,23 +62,15 @@ while($array=mysqli_fetch_array($resultListProv))  {
                         <a href="dash.php?user=1" class="nav-link active"><i class="bi bi-globe"></i> Proveedores</a>
                         <a href="../Reportes/dash.php?user=1" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
                         <a href="../Configuracion/dash.php?user=1" class="nav-link"><i class="bi bi-gear"></i> Configuración</a>
-<<<<<<< HEAD
                        <a href="../Configuracion/dash.php?user=1" class="nav-link"><i class="bi bi-gear"></i> Docentes</a>
-=======
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
                     <?php 
                         } else {
                     ?>
                         <a href="../Inventario/dash.php?user=<?php echo urlencode($_GET['user']); ?>" class="nav-link"><i class="bi bi-box-seam"></i> Inventario</a>
                         <a href="../Pedidos/dash.php?user=<?php echo urlencode($_GET['user']); ?>" class="nav-link"><i class="bi bi-truck"></i> Pedidos y Devoluciones</a>
-<<<<<<< HEAD
                         <a href="../Cupo.php?php" class="nav-link active"><i class="bi bi-globe"></i> Proveedores</a>
                         <a href="../Reportes/dash.php?user=<?php echo urlencode($_GET['user']); ?>" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
                          <a href="../Reportes/dash.php?user=<?php echo urlencode($_GET['user']); ?>" class="nav-link"><i class="bi bi-clipboard-data"></i> Docentes</a>
-=======
-                        <a href="dash.php?user=<?php echo urlencode($_GET['user']); ?>" class="nav-link active"><i class="bi bi-globe"></i> Proveedores</a>
-                        <a href="../Reportes/dash.php?user=<?php echo urlencode($_GET['user']); ?>" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
                     <?php
                         }
                     ?>

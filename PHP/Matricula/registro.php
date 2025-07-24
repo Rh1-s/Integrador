@@ -60,16 +60,10 @@
 
                     <a href="../Registro/Registro_estudiantes.php?user=1" class="nav-link"><i class="bi bi-box-seam"></i> Estudiantes</a>
                     <a href="registro.php" class="nav-link active"><i class="bi bi-truck"></i> Matricula</a>
-<<<<<<< HEAD
                     <a href="../Aula.php" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
                     <a href="../Cupo.php" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
                         <a href="../Registro/Docentes.php" class="nav-link"><i class="bi bi-gear"></i> Docentes</a>
 
-=======
-                    <a href="../Proveedores/dash.php?user=1" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
-                    <a href="dash.php?user=1" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
-                    <a href="../Configuracion/dash.php?user=1" class="nav-link"><i class="bi bi-gear"></i> Configuración</a>
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
                 </div>
             </div>
 

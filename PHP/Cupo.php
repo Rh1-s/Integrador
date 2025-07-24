@@ -35,11 +35,7 @@
             <select name="aula" class="form-select" required>
                 <option value="">-- Aula --</option>
                 <?php
-<<<<<<< HEAD
                 $conn = new mysqli("localhost", "root", "", "Institucion");
-=======
-                $conn = new mysqli("localhost", "root", "", "COLEGIO");
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
                 $aulas = $conn->query("SELECT Nombre_Seccion FROM Secciones");
                 while ($s = $aulas->fetch_assoc()) {
                     echo "<option value='{$s['Nombre_Seccion']}'>{$s['Nombre_Seccion']}</option>";
@@ -91,11 +87,7 @@
                     </div>
                 </div>
                 <div class='text-center mt-4'>
-<<<<<<< HEAD
                     <a href='Cupo.php' class='btn btn-outline-secondary'>Volver a consultar</a>
-=======
-                    <a href='Cupo2.php' class='btn btn-outline-secondary'>Volver a consultar</a>
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
                 </div>
             </div>";
         } else {
@@ -108,7 +100,6 @@
     ?>
 </div>
 
-<<<<<<< HEAD
   <div class="mt-4 text-center">
         <a href="/Integrador-main/PHP/Registro/Registro_estudiantes.php" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-left"></i> Volver al Menú principal
@@ -116,7 +107,5 @@
     </div>
 </div> <!-- cierre del contenedor principal -->
 
-=======
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
 </body>
 </html>

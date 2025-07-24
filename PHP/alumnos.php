@@ -67,11 +67,7 @@
         </thead>
         <tbody>
             <?php
-<<<<<<< HEAD
             $conn = new mysqli("localhost", "root", "", "Institucion");
-=======
-            $conn = new mysqli("localhost", "root", "", "COLEGIO");
->>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
             $result = $conn->query("SELECT * FROM Alumnos");
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
