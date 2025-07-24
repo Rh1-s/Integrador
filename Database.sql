@@ -2,12 +2,14 @@
 CREATE DATABASE IF NOT EXISTS Institucion;
 USE Institucion;
 
+-- Tabla de usuarios login
 CREATE TABLE Login (
     UsuarioID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre_Usuario VARCHAR(100),
     Contrasena VARCHAR(100)
 );
 
+-- Tabla de docentes
 CREATE TABLE Docentes (
     DocenteID INT AUTO_INCREMENT PRIMARY KEY,
     DNI VARCHAR(12) NOT NULL,
@@ -17,6 +19,7 @@ CREATE TABLE Docentes (
     Fec_Registro DATE NOT NULL
 );
 
+-- Tabla de alumnos
 CREATE TABLE Alumnos (
     AlumnoID INT AUTO_INCREMENT PRIMARY KEY,
     DNI VARCHAR(12) NOT NULL,
@@ -26,30 +29,7 @@ CREATE TABLE Alumnos (
     Fec_Registro DATE NOT NULL
 );
 
-CREATE TABLE Categoria (
-    CategoriaID INT AUTO_INCREMENT PRIMARY KEY,
-    Nombre_Categoria VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE Secciones (
-    SeccionID INT AUTO_INCREMENT PRIMARY KEY,
-    CategoriaID INT,
-    Nombre_Seccion VARCHAR(10) NOT NULL,
-    Cupo_Maximo INT NOT NULL,
-    FOREIGN KEY (CategoriaID) REFERENCES Categoria(CategoriaID)
-);
-
-CREATE TABLE Matriculas (
-    MatriculaID INT AUTO_INCREMENT PRIMARY KEY,
-    AlumnoID INT,
-    SeccionID INT,
-    Periodo_Inicio DATE NOT NULL,
-    Periodo_Fin DATE NOT NULL,
-    Estado VARCHAR(20) NOT NULL,
-    FOREIGN KEY (AlumnoID) REFERENCES Alumnos(AlumnoID),
-    FOREIGN KEY (SeccionID) REFERENCES Secciones(SeccionID)
-);
-
+-- Tabla de apoderados
 CREATE TABLE Apoderados (
     ApoderadoID INT AUTO_INCREMENT PRIMARY KEY,
     DNI VARCHAR(100) NOT NULL,
@@ -60,22 +40,85 @@ CREATE TABLE Apoderados (
     Dirección VARCHAR(255)
 );
 
+-- Tabla de categoría (nivel, inicial, primaria, secundaria, etc.)
+CREATE TABLE Categoria (
+    CategoriaID INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre_Categoria VARCHAR(50) NOT NULL
+);
+
+-- Tabla de secciones (A, B, C) por categoría
+CREATE TABLE Secciones (
+    SeccionID INT AUTO_INCREMENT PRIMARY KEY,
+    CategoriaID INT,
+    Nombre_Seccion VARCHAR(10) NOT NULL,
+    Cupo_Maximo INT NOT NULL,
+    FOREIGN KEY (CategoriaID) REFERENCES Categoria(CategoriaID) ON DELETE CASCADE
+);
+
+-- Tabla de cursos
+CREATE TABLE Cursos (
+    CursoID INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre_Curso VARCHAR(100) NOT NULL,
+    Descripcion TEXT
+);
+
+CREATE TABLE Curso_Seccion (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    CursoID INT NOT NULL,
+    SeccionID INT NOT NULL,
+    Estado ENUM('Activo','Inactivo') DEFAULT 'Activo',
+    FOREIGN KEY (CursoID) REFERENCES Cursos(CursoID) ON DELETE CASCADE,
+    FOREIGN KEY (SeccionID) REFERENCES Secciones(SeccionID) ON DELETE CASCADE
+);
+
+-- Relación entre cursos y docentes (quién dicta qué curso)
+CREATE TABLE Curso_Docente (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    CursoID INT,
+    DocenteID INT,
+    FOREIGN KEY (CursoID) REFERENCES Cursos(CursoID) ON DELETE CASCADE,
+    FOREIGN KEY (DocenteID) REFERENCES Docentes(DocenteID) ON DELETE SET NULL
+);
+
+-- Tabla de matrícula por sección
+CREATE TABLE Matriculas (
+    MatriculaID INT AUTO_INCREMENT PRIMARY KEY,
+    AlumnoID INT,
+    SeccionID INT,
+    Periodo_Inicio DATE NOT NULL,
+    Periodo_Fin DATE NOT NULL,
+    Estado VARCHAR(20) NOT NULL,
+    FOREIGN KEY (AlumnoID) REFERENCES Alumnos(AlumnoID) ON DELETE CASCADE,
+    FOREIGN KEY (SeccionID) REFERENCES Secciones(SeccionID) ON DELETE SET NULL
+);
+
+-- Relación entre matrícula y cursos
+CREATE TABLE Matricula_Curso (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    MatriculaID INT,
+    CursoID INT,
+    FOREIGN KEY (MatriculaID) REFERENCES Matriculas(MatriculaID) ON DELETE CASCADE,
+    FOREIGN KEY (CursoID) REFERENCES Cursos(CursoID) ON DELETE CASCADE
+);
+
+-- Tabla de asistencias
 CREATE TABLE Asistencias (
     AsistenciaID INT AUTO_INCREMENT PRIMARY KEY,
     AlumnoID INT,
     Fecha DATE NOT NULL,
     Estado VARCHAR(20) NOT NULL,
-    FOREIGN KEY (AlumnoID) REFERENCES Alumnos(AlumnoID)
+    FOREIGN KEY (AlumnoID) REFERENCES Alumnos(AlumnoID) ON DELETE CASCADE
 );
 
+-- Tabla de observaciones
 CREATE TABLE Observaciones (
     ObservacionID INT AUTO_INCREMENT PRIMARY KEY,
     AlumnoID INT,
     DocenteID INT,
     Fecha DATE,
     Comentario TEXT,
-    FOREIGN KEY (AlumnoID) REFERENCES Alumnos(AlumnoID),
-    FOREIGN KEY (DocenteID) REFERENCES Docentes(DocenteID)
+    FOREIGN KEY (AlumnoID) REFERENCES Alumnos(AlumnoID) ON DELETE CASCADE,
+    FOREIGN KEY (DocenteID) REFERENCES Docentes(DocenteID) ON DELETE SET NULL
 );
 
 
