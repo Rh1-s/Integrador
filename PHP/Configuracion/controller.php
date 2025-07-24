@@ -1,6 +1,7 @@
 <?php
 include '../Negocio/negocio.php';
 
+<<<<<<< HEAD
 // Registrar Matrícula
 if (isset($_POST["guardarMatricula"])) {
     $obj = new Negocio();
@@ -19,11 +20,25 @@ if (isset($_POST["guardarMatricula"])) {
 }
 
 // Eliminar Matrícula
+=======
+//Registrar Matricula
+if (isset($_POST["guardarMatricula"])) {
+    $obj = new Negocio();
+    $matricula = $obj->addMatri($_POST["alumnoID"], $_POST["seccionID"], $_POST["periodoInicio"], $_POST["periodoFin"], $_POST["estado"]);
+    if (!$matricula) {
+    } else {
+        header("location: ../Matricula/registro.php");
+    }
+}
+
+//Boton Eliminar
+>>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['MatriculaID'])) {
     $MatriculaID = $_GET['MatriculaID'];
     $negocio = new Negocio();
     $resultado = $negocio->deleteMatri($MatriculaID);
 
+<<<<<<< HEAD
     if ($resultado) {
         header("location: ../Matricula/registro.php");
         exit();
@@ -31,6 +46,15 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['Matri
 }
 
 // Registrar Alumno
+=======
+    if (!$resultado) {
+    } else {
+        header("location: ../Matricula/registro.php");
+    }
+}
+
+// Registrar alumno
+>>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
 if (isset($_POST["guardarAlumno"])) {
     $dni = $_POST["dni"];
     $nombres = $_POST["nombres"];
@@ -43,13 +67,19 @@ if (isset($_POST["guardarAlumno"])) {
 
     if ($res) {
         header("Location: ../Registro/Registro_estudiantes.php");
+<<<<<<< HEAD
         exit();
+=======
+>>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
     } else {
         echo "<script>alert('Error al registrar alumno');</script>";
     }
 }
 
+<<<<<<< HEAD
 // Editar Alumno
+=======
+>>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
 if (isset($_POST['editarAlumno'])) {
     $id = $_POST['AlumnoID'];
     $dni = $_POST['dni'];
@@ -67,6 +97,7 @@ if (isset($_POST['editarAlumno'])) {
         echo "<script>alert('Error al editar alumno');</script>";
     }
 }
+<<<<<<< HEAD
 
 // Editar Docente
 if (isset($_POST['editarDocente'])) {
@@ -141,3 +172,25 @@ if (isset($_POST["addDocente"])) {
         exit();
     }
 }
+=======
+//Boton Editar
+/*
+if (isset($_POST["botoneditar"])) {
+    $objeto = new Negocio();
+    $id_alumno = $_POST["id_alumno"];
+    $dni = $_POST["dni"];
+    $nombre = $_POST["nombres"];
+    $apellido = $_POST["apellidos"];
+    $aula = $_POST["id_aula"];
+    $lenguaje = $_POST["lenguaje"];
+    $mate = $_POST["matematica"];
+    $edad = $_POST["edad"];
+
+    $edit = $objeto->editMatri($id_alumno, $dni, $nombre, $apellido, $aula, $lenguaje, $mate, $edad);
+    if (!$edit) {
+    } else {
+        header("location: ../dashboard.php");
+    }
+}*/
+?>
+>>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642

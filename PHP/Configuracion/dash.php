@@ -52,7 +52,11 @@ while($array=mysqli_fetch_array($resultListUsers))  {
                     <a href="../Pedidos/dash.php?user=1" class="nav-link"><i class="bi bi-truck"></i> Pedidos y Devoluciones</a>
                     <a href="../Proveedores/dash.php?user=1" class="nav-link"><i class="bi bi-globe"></i> Proveedores</a>
                     <a href="../Reportes/dash.php?user=1" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
+<<<<<<< HEAD
                     <a href="dash.php?user=1" class="nav-link active"><i class="bi bi-gear"></i> a</a>
+=======
+                    <a href="dash.php?user=1" class="nav-link active"><i class="bi bi-gear"></i> Configuración</a>
+>>>>>>> 8ca8bcfc0866877ba38f83eaefa8297c15944642
                 </div>
             </div>
 
