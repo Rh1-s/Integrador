@@ -69,6 +69,8 @@ if (isset($_GET['error'])) {
                 <a href="../Aula.php" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
                 <a href="../Cupo.php?user=1" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
                 <a href="../Registro/Docentes.php" class="nav-link active"><i class="bi bi-person"></i> Docentes</a>
+                <a href="../Cursos/registro_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Cursos</a>
+                <a href="../Cursos/ver_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Ver Cursos </a>
             </div>
         </div>
 

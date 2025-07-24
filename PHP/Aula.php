@@ -124,7 +124,7 @@ if (isset($_GET['eliminar'])) {
 </div>
 
   <div class="mt-4 text-center">
-        <a href="/Integrador-main/PHP/Registro/Registro_estudiantes.php" class="btn btn-outline-secondary">
+        <a href="../PHP/Registro/Registro_estudiantes.php" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-left"></i> Volver al Menú principal
         </a>
     </div>

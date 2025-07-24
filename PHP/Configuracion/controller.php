@@ -141,3 +141,43 @@ if (isset($_POST["addDocente"])) {
         exit();
     }
 }
+
+if (isset($_POST['guardarCurso'])) {
+    $nombre      = $_POST['nombre'];
+    $descripcion = $_POST['descripcion'];
+    $docente_id  = (int)$_POST['docente_id'];
+    $seccion_id  = (int)$_POST['aula_id'];
+    $estado      = $_POST['estado'];
+    $negocio = new Negocio();
+    $ok = $negocio->addCurso($nombre, $descripcion, $docente_id, $seccion_id, $estado);
+    if ($ok) {
+        header("Location: ../Cursos/registro_curso.php?success=1");
+    } else {
+        header("Location: ../Cursos/registro_curso.php?error=1");
+    }
+    exit();
+}
+
+if (isset($_GET['action']) && $_GET['action'] === 'deleteCurso' && isset($_GET['CursoID'])) {
+    $negocio = new Negocio();
+    $negocio->deleteCurso((int)$_GET['CursoID']);
+    header("Location: ../Cursos/registro_curso.php?deleted=1");
+    exit();
+}
+
+if (isset($_POST['editarCurso'])) {
+    $negocio = new Negocio();
+    $cursoId     = (int)$_POST['CursoID'];
+    $nombre      = $_POST['nombre'];
+    $descripcion = $_POST['descripcion'];
+    $docente_id  = (int)$_POST['docente_id'];
+    $seccion_id  = (int)$_POST['aula_id'];
+    $estado      = $_POST['estado'];
+
+    if ($negocio->updateCurso($cursoId, $nombre, $descripcion, $docente_id, $seccion_id, $estado)) {
+        header("Location: ../Cursos/registro_curso.php?success_edit=1");
+    } else {
+        header("Location: ../Cursos/registro_curso.php?error_edit=1");
+    }
+    exit();
+}
