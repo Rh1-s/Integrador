@@ -444,6 +444,19 @@ class Negocio
         return $res;
     }
 
+    function getConductaByCurso($docente_id)
+    {
+        $sql = "SELECT a.Nombres, a.Apellidos, Comentario, Fecha FROM `observaciones` o INNER JOIN alumnos a ON a.AlumnoID=o.AlumnoID where DocenteID=$docente_id";
+        $obj = new Conexion();
+        $res = mysqli_query($obj->conecta(), $sql) or
+            die(mysqli_error($obj->conecta()));
+        $vec = array();
+        while ($fila = mysqli_fetch_array($res)) {
+            $vec[] = $fila;
+        }
+        return $vec;
+    }
+
     function getAlumnosByCurso($curso_id) {
     $sql = "SELECT a.AlumnoID, a.Nombres, a.Apellidos
             FROM Matricula_Curso mc
@@ -546,4 +559,18 @@ class Negocio
         mysqli_stmt_bind_param($stmt3, "ii", $matricula_id, $curso_id);
         return mysqli_stmt_execute($stmt3);
     }
+
+    function getConductaByCurso($docente_id)
+    {
+        $sql = "SELECT a.Nombres, a.Apellidos, Comentario, Fecha FROM `observaciones` o INNER JOIN alumnos a ON a.AlumnoID=o.AlumnoID where DocenteID=$docente_id";
+        $obj = new Conexion();
+        $res = mysqli_query($obj->conecta(), $sql) or
+            die(mysqli_error($obj->conecta()));
+        $vec = array();
+        while ($fila = mysqli_fetch_array($res)) {
+            $vec[] = $fila;
+        }
+        return $vec;
+    }
+
 }

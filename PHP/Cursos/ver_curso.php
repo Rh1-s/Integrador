@@ -116,8 +116,8 @@ $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
                         <a href="../Cursos/ver_curso.php" class="nav-link active"><i class="bi bi-journal-bookmark-fill"></i> Ver Cursos </a>
                         <a href="../Login/config.php" class="nav-link"><i class="bi bi-gear"></i> Administrar usuarios </a>
                     <?php endif; ?>
-
                 </div>
+
 
             </div>
 
