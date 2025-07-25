@@ -1,10 +1,15 @@
 <?php
+session_start();
+$rol = $_SESSION["IDUSUARIO"][1] ?? 'Invitado'; // "Administrador", "Docente", etc.
+?>
+<?php
 include '../Negocio/negocio.php';
 $obj = new Negocio();
 $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Visualización de Cursos</title>
@@ -28,31 +33,37 @@ $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
         body {
             background-color: #f8f9fa;
         }
+
         .custom-sidebar {
             background-color: #0d1b2a;
             min-height: 100vh;
             color: white;
             padding-top: 20px;
         }
+
         .custom-sidebar .nav-link {
             color: #fff;
             margin: 10px 0;
         }
+
         .custom-sidebar .nav-link.active {
             background-color: #1b263b;
             border-radius: 8px;
         }
+
         .course-card {
             border-radius: 12px;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
             background: #fff;
         }
+
         .course-card:hover {
             transform: translateY(-5px);
         }
+
         .course-progress {
             font-size: 14px;
             font-weight: bold;
@@ -64,42 +75,51 @@ $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
             padding: 4px 8px;
             border-radius: 5px;
         }
+
         .course-image {
             width: 100%;
             height: 150px;
             object-fit: cover;
         }
+
         .course-body {
             padding: 15px;
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="../../src/images/logo.png" alt="Logo SnowBox" class="logo-img">
-        </a>
-        <span class="navbar-text text-white">Administrador</span>
-        <a href="../../index.php" class="text-white"><i class="bi bi-box-arrow-left"></i></a>
-    </div>
-</nav>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="../../src/images/logo.png" alt="Logo SnowBox" class="logo-img">
+            </a>
+            <span class="navbar-text text-white">Administrador</span>
+            <a href="../../index.php" class="text-white"><i class="bi bi-box-arrow-left"></i></a>
+        </div>
+    </nav>
 
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
             <div class="col-2 custom-sidebar">
-            <div class="nav flex-column">
-                <a href="../Registro/Registro_estudiantes.php?user=1" class="nav-link"><i class="bi bi-box-seam"></i> Estudiantes</a>
-                <a href="../Matricula/registro.php" class="nav-link"><i class="bi bi-truck"></i> Matrícula</a>
-                <a href="../Aula.php" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
-                <a href="../Cupo.php" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
-                <a href="../Registro/Docentes.php" class="nav-link"><i class="bi bi-gear"></i> Docentes</a>
-                <a href="../Cursos/registro_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Cursos</a>
-                <a href="../Cursos/ver_curso.php" class="nav-link active"><i class="bi bi-journal-bookmark-fill"></i> Ver Cursos </a>
+                <div class="nav flex-column">
+                    <?php if ($rol != 'Docente'): ?>
+                        <a href="../Registro/Registro_estudiantes.php?user=1" class="nav-link"><i class="bi bi-box-seam"></i> Estudiantes</a>
+                        <a href="../Matricula/registro.php" class="nav-link"><i class="bi bi-truck"></i> Matrícula</a>
+                        <a href="../Aula.php" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
+                        <a href="../Cupo.php" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
+                        <a href="../Registro/Docentes.php" class="nav-link"><i class="bi bi-person"></i> Docentes</a>
+                        <a href="../Cursos/registro_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Cursos</a>
+                        <a href="../Login/config.php" class="nav-link"><i class="bi bi-gear"></i> Administrar usuarios </a>
+                    <?php endif; ?>
+
+                    <!-- Este se muestra siempre -->
+                    <a href="../Cursos/ver_curso.php" class="nav-link active"><i class="bi bi-journal-bookmark-fill"></i> Ver Cursos </a>
+                </div>
+
             </div>
-        </div>
 
             <!-- Contenido de cursos -->
             <div class="col-10 mt-4">
@@ -130,4 +150,5 @@ $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
         </div>
     </div>
 </body>
+
 </html>

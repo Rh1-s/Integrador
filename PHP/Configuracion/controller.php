@@ -142,6 +142,25 @@ if (isset($_POST["addDocente"])) {
     }
 }
 
+//Registrar Usuario
+if (isset($_POST["registrarUsuario"])) {
+    $nombres = $_POST["username"];
+    $contra = $_POST["password"];
+    $tipo = $_POST["tipoUsuario"];
+    
+    $obj = new Negocio();
+    $res = $obj->addUsuario($nombres, $contra, $tipo);
+
+    if ($res) {
+        header("Location: ../Login/config.php?success=1");
+        exit();
+    } else {
+        header("Location: ../Login/config.php?error=1");
+        exit();
+    }
+}
+
+
 if (isset($_POST['guardarCurso'])) {
     $nombre      = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];

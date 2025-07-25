@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 
+
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesión</title>
@@ -9,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/index/index.css">
     <link rel="icon" href="src/images/logo.ico">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         .logo-container {
@@ -56,7 +58,7 @@
             </form>
 
             <!-- Formulario Docente -->
-            <form id="formDocente" class="formulario" action="PHP/Login/controller_docente.php?action=login" method="post">
+            <form id="formDocente" class="formulario" action="PHP/Login/controller.php?action=loginD" method="post">
                 <input type="hidden" name="rol" value="docente">
                 <div class="mb-3">
                     <label class="form-label">Código Docente</label>
@@ -116,6 +118,30 @@
             }
         }
     </script>
+
+    <?php if (isset($_GET['error'])): ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Acceso denegado',
+                    text: 'Usuario no valido como Docente'
+                });
+            });
+        </script>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['errora'])): ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Acceso denegado',
+                    text: 'Usuario no valido como Administrador'
+                });
+            });
+        </script>
+    <?php endif; ?>
 </body>
 
 </html>

@@ -58,18 +58,20 @@
             <div class="col-2 custom-sidebar">
                 <div class="nav flex-column">
 
-                    <a href="../Registro/Registro_estudiantes.php?user=1" class="nav-link"><i class="bi bi-box-seam"></i> Estudiantes</a>
-                    <a href="registro.php" class="nav-link active"><i class="bi bi-truck"></i> Matricula</a>
+                    <a href="../Registro/Registro_estudiantes.php?user=1" class="nav-link "><i class="bi bi-box-seam"></i> Estudiantes</a>
+                    <a href="../Matricula/registro.php" class="nav-link active"><i class="bi bi-truck"></i> Matrícula</a>
                     <a href="../Aula.php" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
                     <a href="../Cupo.php" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
-                    <a href="../Registro/Docentes.php" class="nav-link"><i class="bi bi-gear"></i> Docentes</a>
+                    <a href="../Registro/Docentes.php" class="nav-link"><i class="bi bi-person"></i> Docentes</a>
                     <a href="../Cursos/registro_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Cursos</a>
                     <a href="../Cursos/ver_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Ver Cursos </a>
+                    <a href="../Login/config.php" class="nav-link"><i class="bi bi-gear"></i> Administrar usuarios </a>
                 </div>
             </div>
 
             <!-- Main Content -->
             <div class="col-10 mt-3">
+                <h4>Registro de Matriculas</h4>
                 <!-- Formulario de Matrícula -->
                 <form action="../Configuracion/controller.php" method="POST">
                     <div class="row">

@@ -71,6 +71,7 @@ if (isset($_GET['error'])) {
                 <a href="../Registro/Docentes.php" class="nav-link active"><i class="bi bi-person"></i> Docentes</a>
                 <a href="../Cursos/registro_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Cursos</a>
                 <a href="../Cursos/ver_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Ver Cursos </a>
+                <a href="../Login/config.php" class="nav-link"><i class="bi bi-gear"></i> Administrar usuarios </a>
             </div>
         </div>
 

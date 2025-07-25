@@ -6,7 +6,8 @@ USE Institucion;
 CREATE TABLE Login (
     UsuarioID INT AUTO_INCREMENT PRIMARY KEY,
     Nombre_Usuario VARCHAR(100),
-    Contrasena VARCHAR(100)
+    Contrasena VARCHAR(100),
+    Tipo VARCHAR(100)
 );
 
 -- Tabla de docentes
@@ -123,7 +124,7 @@ CREATE TABLE Observaciones (
 
 
 -- Login
-INSERT INTO Login (Nombre_Usuario, contrasena) VALUES ('admin', '1234');
+INSERT INTO Login (Nombre_Usuario, contrasena, Tipo) VALUES ('admin', '1234','Administrador');
 
 
 
