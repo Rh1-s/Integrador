@@ -22,13 +22,15 @@ if (!$docente) {
     <title>Detalle del Docente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             background: #f8f9fa;
         }
 
         .docente-card {
-            max-width: 900px;
+            max-width: 950px;
             margin: 30px auto;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
@@ -39,6 +41,12 @@ if (!$docente) {
             color: white;
             padding: 20px;
             border-radius: 12px 12px 0 0;
+        }
+        .attendance-section {
+            margin-top: 30px;
+        }
+        .attendance-section table th, .attendance-section table td {
+            text-align: center;
         }
     </style>
 </head>
@@ -107,6 +115,13 @@ if (!$docente) {
                             </div>
                         <?php endif; ?>
                     </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <?= htmlspecialchars($curso['Nombre_Curso']) ?> 
+                            <small>(Sección: <?= htmlspecialchars($curso['Nombre_Seccion']) ?>)</small>
+                        </span>
+                        <button class="btn btn-sm btn-outline-info" onclick="cargarAsistencia(<?= $curso['CursoID'] ?>)">Asistencia</button>
+                    </li>
                 <?php endforeach; ?>
 
             </div>
@@ -116,6 +131,90 @@ if (!$docente) {
             <a href="../Registro/Docentes.php" class="btn btn-secondary">Volver a Docentes</a>
         </div>
     </div>
+
+    <!-- Módulo de Asistencia -->
+    <div class="card docente-card attendance-section" id="attendance-card" style="display:none;">
+        <div class="card-body">
+            <h5 class="fw-bold">Asistencia del Curso: <span id="nombreCurso"></span></h5>
+            <form id="asistenciaForm" method="POST">
+                <table class="table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Presente</th>
+                            <th>Ausente</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alumnosAsistencia">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-success mt-2">Guardar Asistencia</button>
+            </form>
+            <div class="d-flex justify-content-between mt-3">
+                <input type="date" id="fechaPDF" value="<?= date('Y-m-d') ?>" class="form-control w-auto">
+                <a id="btnExportPDF" class="btn btn-danger"><i class="bi bi-file-earmark-pdf"></i> Exportar PDF</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="../Registro/Docentes.php" class="btn btn-secondary">Volver a Docentes</a>
+    </div>
+</div>
+
+<script>
+function cargarAsistencia(cursoID) {
+    $.ajax({
+        url: '../Configuracion/controller.php',
+        type: 'GET',
+        data: { action: 'getAsistencia', curso_id: cursoID },
+        dataType: 'json',
+        success: function(data) {
+            if (data.success) {
+                $('#attendance-card').show();
+                $('#nombreCurso').text(data.curso);
+                let alumnosHTML = '';
+                data.alumnos.forEach(a => {
+                    alumnosHTML += `
+                        <tr>
+                            <td>${a.Nombres} ${a.Apellidos}</td>
+                            <td><input type="radio" name="estado_${a.AlumnoID}" value="Presente" checked></td>
+                            <td><input type="radio" name="estado_${a.AlumnoID}" value="Ausente"></td>
+                        </tr>
+                    `;
+                });
+                $('#alumnosAsistencia').html(alumnosHTML);
+                $('#asistenciaForm').attr('data-curso', cursoID);
+                $('#asistenciaForm').off('submit').on('submit', function(e){
+                    e.preventDefault();
+                    guardarAsistencia(cursoID);
+                });
+            } else {
+                Swal.fire("Error", "No se pudo cargar la asistencia.", "error");
+            }
+        }
+    });
+}
+
+function guardarAsistencia(cursoID) {
+    let formData = $('#asistenciaForm').serialize() + '&action=saveAsistencia&curso_id=' + cursoID;
+    $.post('../Configuracion/controller.php', formData, function(response){
+        Swal.fire("Éxito", "Asistencia registrada correctamente.", "success");
+    }, 'json');
+}
+
+$('#btnExportPDF').on('click', function() {
+    const cursoID = $('#asistenciaForm').data('curso');
+    const fecha = $('#fechaPDF').val();
+    if (!cursoID) {
+        Swal.fire("Error", "Primero selecciona un curso.", "error");
+        return;
+    }
+    window.open(`../Reportes/asistencia_pdf.php?curso_id=${cursoID}&fecha=${fecha}`, '_blank');
+});
+
+</script>
 
 </body>
 
