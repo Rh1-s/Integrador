@@ -112,11 +112,13 @@ $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
                         <a href="../Cupo.php" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>
                         <a href="../Registro/Docentes.php" class="nav-link"><i class="bi bi-person"></i> Docentes</a>
                         <a href="../Cursos/registro_curso.php" class="nav-link"><i class="bi bi-journal-bookmark-fill"></i> Cursos</a>
-                        <a href="../Login/config.php" class="nav-link"><i class="bi bi-gear"></i> Administrar usuarios </a>
                     <?php endif; ?>
 
                     <!-- Este se muestra siempre -->
                     <a href="../Cursos/ver_curso.php" class="nav-link active"><i class="bi bi-journal-bookmark-fill"></i> Ver Cursos </a>
+                    <?php if ($rol != 'Docente'): ?>
+                        <a href="../Login/config.php" class="nav-link"><i class="bi bi-gear"></i> Administrar usuarios </a>
+                    <?php endif; ?>
                 </div>
 
             </div>
