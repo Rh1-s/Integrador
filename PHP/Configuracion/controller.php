@@ -216,20 +216,16 @@ if (isset($_GET['action']) && $_GET['action'] === 'getAsistencia') {
     exit;
 }
 
-// Guardar asistencia
 if (isset($_POST['action']) && $_POST['action'] === 'saveAsistencia') {
     $curso_id = (int)$_POST['curso_id'];
-    $fecha = date('Y-m-d'); // Puedes cambiar para usar un input específico
-
-    include '../Negocio/negocio.php';
+    $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : date('Y-m-d');
     $obj = new Negocio();
 
-    // Iterar sobre los alumnos enviados
     foreach ($_POST as $key => $value) {
         if (strpos($key, 'estado_') === 0) {
-            $alumnoID = str_replace('estado_', '', $key);
+            $alumno_id = (int)str_replace('estado_', '', $key);
             $estado = $value;
-            $obj->saveAsistencia($alumnoID, $fecha, $estado);
+            $obj->saveAsistencia($alumno_id, $curso_id, $fecha, $estado);
         }
     }
 

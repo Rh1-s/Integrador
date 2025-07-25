@@ -77,6 +77,7 @@ if (isset($_GET['error'])) {
                 <div class="nav flex-column">
 
                     <a href="../Registro/Registro_estudiantes.php?user=1" class="nav-link "><i class="bi bi-box-seam"></i> Estudiantes</a>
+                    <a href="../Registro/asignar_estudiantes.php" class="nav-link"><i class="bi bi-people"></i> Asignar Estudiantes</a>
                     <a href="../Matricula/registro.php" class="nav-link "><i class="bi bi-truck"></i> Matrícula</a>
                     <a href="../Aula.php" class="nav-link"><i class="bi bi-globe"></i> Aulas</a>
                     <a href="../Cupo.php" class="nav-link"><i class="bi bi-clipboard-data"></i> Reportes</a>

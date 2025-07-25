@@ -465,16 +465,32 @@ class Negocio
         return $alumnos;
     }
 
-    function saveAsistencia($alumno_id, $fecha, $estado) {
-        $sql = "INSERT INTO Asistencias (AlumnoID, Fecha, Estado) VALUES (?, ?, ?)
-                ON DUPLICATE KEY UPDATE Estado = VALUES(Estado)";
-        
+    function saveAsistencia($alumno_id, $curso_id, $fecha, $estado)
+    {
         $obj = new Conexion();
-        $cn = $obj->conecta();
-        $stmt = mysqli_prepare($cn, $sql);
-        mysqli_stmt_bind_param($stmt, "iss", $alumno_id, $fecha, $estado);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
+        $cn  = $obj->conecta();
+
+        $alumno_id = (int)$alumno_id;
+        $curso_id  = (int)$curso_id;
+        $fecha = mysqli_real_escape_string($cn, $fecha);
+        $estado = mysqli_real_escape_string($cn, $estado);
+
+        // Consulta para verificar existencia
+        $sql_check = "SELECT AsistenciaID 
+                    FROM Asistencias 
+                    WHERE AlumnoID = $alumno_id AND CursoID = $curso_id AND Fecha = '$fecha'";
+        $res = mysqli_query($cn, $sql_check);
+
+        if ($res && mysqli_num_rows($res) > 0) {
+            $sql = "UPDATE Asistencias 
+                    SET Estado = '$estado' 
+                    WHERE AlumnoID = $alumno_id AND CursoID = $curso_id AND Fecha = '$fecha'";
+        } else {
+            $sql = "INSERT INTO Asistencias (AlumnoID, CursoID, Fecha, Estado) 
+                    VALUES ($alumno_id, $curso_id, '$fecha', '$estado')";
+        }
+
+        return mysqli_query($cn, $sql);
     }
 
     function getAsistenciaByCursoFecha($curso_id, $fecha) {

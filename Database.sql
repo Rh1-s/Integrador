@@ -106,6 +106,7 @@ CREATE TABLE Matricula_Curso (
 CREATE TABLE Asistencias (
     AsistenciaID INT AUTO_INCREMENT PRIMARY KEY,
     AlumnoID INT,
+    CursoID INT,
     Fecha DATE NOT NULL,
     Estado VARCHAR(20) NOT NULL,
     FOREIGN KEY (AlumnoID) REFERENCES Alumnos(AlumnoID) ON DELETE CASCADE

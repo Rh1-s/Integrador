@@ -120,6 +120,10 @@ function cargarAsistencia(cursoID) {
             if (data.success) {
                 $('#attendance-card').show();
                 $('#nombreCurso').text(data.curso);
+
+                // Guardamos cursoID en el formulario
+                $('#asistenciaForm').attr('data-curso', cursoID);
+
                 let alumnosHTML = '';
                 data.alumnos.forEach(a => {
                     alumnosHTML += `
@@ -131,10 +135,10 @@ function cargarAsistencia(cursoID) {
                     `;
                 });
                 $('#alumnosAsistencia').html(alumnosHTML);
-                $('#asistenciaForm').attr('data-curso', cursoID);
+
                 $('#asistenciaForm').off('submit').on('submit', function(e){
                     e.preventDefault();
-                    guardarAsistencia(cursoID);
+                    guardarAsistencia($(this).attr('data-curso'));
                 });
             } else {
                 Swal.fire("Error", "No se pudo cargar la asistencia.", "error");
@@ -144,11 +148,19 @@ function cargarAsistencia(cursoID) {
 }
 
 function guardarAsistencia(cursoID) {
-    let formData = $('#asistenciaForm').serialize() + '&action=saveAsistencia&curso_id=' + cursoID;
+    let fecha = $('#fechaPDF').val(); // Tomamos la fecha seleccionada
+    let formData = $('#asistenciaForm').serialize() +
+                   '&action=saveAsistencia' +
+                   '&curso_id=' + cursoID +
+                   '&fecha=' + fecha;
+
+    console.log(formData); // Para verificar qué se envía
     $.post('../Configuracion/controller.php', formData, function(response){
+        console.log(response); 
         Swal.fire("Éxito", "Asistencia registrada correctamente.", "success");
     }, 'json');
 }
+
 
 $('#btnExportPDF').on('click', function() {
     const cursoID = $('#asistenciaForm').data('curso');
