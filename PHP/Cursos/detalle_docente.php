@@ -130,11 +130,6 @@ if (!$docente) {
             </div>
         </div>
 
-        <div class="text-center mt-3">
-            <a href="../Registro/Docentes.php" class="btn btn-secondary">Volver a Docentes</a>
-        </div>
-    </div>
-
     <!-- Módulo de Asistencia -->
     <div class="card docente-card attendance-section" id="attendance-card" style="display:none;">
         <div class="card-body">
