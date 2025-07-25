@@ -42,10 +42,13 @@ if (!$docente) {
             padding: 20px;
             border-radius: 12px 12px 0 0;
         }
+
         .attendance-section {
             margin-top: 30px;
         }
-        .attendance-section table th, .attendance-section table td {
+
+        .attendance-section table th,
+        .attendance-section table td {
             text-align: center;
         }
     </style>
@@ -117,7 +120,7 @@ if (!$docente) {
                     </div>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span>
-                            <?= htmlspecialchars($curso['Nombre_Curso']) ?> 
+                            <?= htmlspecialchars($curso['Nombre_Curso']) ?>
                             <small>(Sección: <?= htmlspecialchars($curso['Nombre_Seccion']) ?>)</small>
                         </span>
                         <button class="btn btn-sm btn-outline-info" onclick="cargarAsistencia(<?= $curso['CursoID'] ?>)">Asistencia</button>
@@ -158,63 +161,66 @@ if (!$docente) {
         </div>
     </div>
 
-    <div class="text-center mt-3">
-        <a href="../Registro/Docentes.php" class="btn btn-secondary">Volver a Docentes</a>
-    </div>
-</div>
 
-<script>
-function cargarAsistencia(cursoID) {
-    $.ajax({
-        url: '../Configuracion/controller.php',
-        type: 'GET',
-        data: { action: 'getAsistencia', curso_id: cursoID },
-        dataType: 'json',
-        success: function(data) {
-            if (data.success) {
-                $('#attendance-card').show();
-                $('#nombreCurso').text(data.curso);
-                let alumnosHTML = '';
-                data.alumnos.forEach(a => {
-                    alumnosHTML += `
+
+    <script>
+        function cargarAsistencia(cursoID) {
+            $.ajax({
+                url: '../Configuracion/controller.php',
+                type: 'GET',
+                data: {
+                    action: 'getAsistencia',
+                    curso_id: cursoID
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success) {
+                        $('#attendance-card').show();
+                        $('#nombreCurso').text(data.curso);
+                        let alumnosHTML = '';
+                        data.alumnos.forEach(a => {
+                            alumnosHTML += `
                         <tr>
                             <td>${a.Nombres} ${a.Apellidos}</td>
                             <td><input type="radio" name="estado_${a.AlumnoID}" value="Presente" checked></td>
                             <td><input type="radio" name="estado_${a.AlumnoID}" value="Ausente"></td>
                         </tr>
                     `;
-                });
-                $('#alumnosAsistencia').html(alumnosHTML);
-                $('#asistenciaForm').attr('data-curso', cursoID);
-                $('#asistenciaForm').off('submit').on('submit', function(e){
-                    e.preventDefault();
-                    guardarAsistencia(cursoID);
-                });
-            } else {
-                Swal.fire("Error", "No se pudo cargar la asistencia.", "error");
-            }
+                        });
+                        $('#alumnosAsistencia').html(alumnosHTML);
+                        $('#asistenciaForm').attr('data-curso', cursoID);
+                        $('#asistenciaForm').off('submit').on('submit', function(e) {
+                            e.preventDefault();
+                            guardarAsistencia(cursoID);
+                        });
+                    } else {
+                        Swal.fire("Error", "No se pudo cargar la asistencia.", "error");
+                    }
+                }
+            });
         }
-    });
-}
 
-function guardarAsistencia(cursoID) {
-    let formData = $('#asistenciaForm').serialize() + '&action=saveAsistencia&curso_id=' + cursoID;
-    $.post('../Configuracion/controller.php', formData, function(response){
-        Swal.fire("Éxito", "Asistencia registrada correctamente.", "success");
-    }, 'json');
-}
+        function guardarAsistencia(cursoID) {
+            let formData = $('#asistenciaForm').serialize() + '&action=saveAsistencia&curso_id=' + cursoID;
+            $.post('../Configuracion/controller.php', formData, function(response) {
+                Swal.fire("Éxito", "Asistencia registrada correctamente.", "success");
+            }, 'json');
+        }
 
-$('#btnExportPDF').on('click', function() {
-    const cursoID = $('#asistenciaForm').data('curso');
-    const fecha = $('#fechaPDF').val();
-    if (!cursoID) {
-        Swal.fire("Error", "Primero selecciona un curso.", "error");
-        return;
-    }
-    window.open(`../Reportes/asistencia_pdf.php?curso_id=${cursoID}&fecha=${fecha}`, '_blank');
-});
-
-</script>
+        $('#btnExportPDF').on('click', function() {
+            const cursoID = $('#asistenciaForm').data('curso');
+            const fecha = $('#fechaPDF').val();
+            if (!cursoID) {
+                Swal.fire("Error", "Primero selecciona un curso.", "error");
+                return;
+            }
+            window.open(`../Reportes/asistencia_pdf.php?curso_id=${cursoID}&fecha=${fecha}`, '_blank');
+        });
+    </script>
+    <div class="text-center mt-3">
+        <a href="../Registro/Docentes.php" class="btn btn-secondary">Volver a Docentes</a>
+    </div>
+    </div>
 
 </body>
 
