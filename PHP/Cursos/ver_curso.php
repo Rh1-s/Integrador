@@ -121,6 +121,7 @@ $cursos = $obj->lisCursos(); // Devuelve los cursos con docente y aula
                     <?php endif; ?>
                 </div>
 
+
             </div>
 
             <!-- Contenido de cursos -->
