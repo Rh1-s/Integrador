@@ -200,3 +200,68 @@ if (isset($_POST['editarCurso'])) {
     }
     exit();
 }
+
+// Obtener lista de alumnos de un curso
+if (isset($_GET['action']) && $_GET['action'] === 'getAsistencia') {
+    $curso_id = (int)$_GET['curso_id'];
+    $obj = new Negocio();
+    $alumnos = $obj->getAlumnosByCurso($curso_id);
+    $curso = $obj->getCursoById($curso_id);
+
+    echo json_encode([
+        'success' => true,
+        'curso' => $curso['Nombre_Curso'],
+        'alumnos' => $alumnos
+    ]);
+    exit;
+}
+
+// Guardar asistencia
+if (isset($_POST['action']) && $_POST['action'] === 'saveAsistencia') {
+    $curso_id = (int)$_POST['curso_id'];
+    $fecha = date('Y-m-d'); // Puedes cambiar para usar un input específico
+
+    include '../Negocio/negocio.php';
+    $obj = new Negocio();
+
+    // Iterar sobre los alumnos enviados
+    foreach ($_POST as $key => $value) {
+        if (strpos($key, 'estado_') === 0) {
+            $alumnoID = str_replace('estado_', '', $key);
+            $estado = $value;
+            $obj->saveAsistencia($alumnoID, $fecha, $estado);
+        }
+    }
+
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+if (isset($_POST['asignarCurso'])) {
+    $obj = new Negocio();
+
+    $alumno_id = $_POST['alumno'];
+    $seccion_id = $_POST['seccion'];
+    $curso_id = $_POST['curso'];
+
+    $res = $obj->asignarEstudianteCurso($alumno_id, $seccion_id, $curso_id);
+
+    if ($res) {
+        header("Location: ../Registro/asignar_estudiantes.php?success=1");
+    } else {
+        header("Location: ../Registro/asignar_estudiantes.php?error=1");
+    }
+}
+
+if (isset($_POST['asignarMultiple'])) {
+    $obj = new Negocio();
+
+    $alumnos = $_POST['alumnos'] ?? [];
+    $seccion = $_POST['seccion'];
+    $curso = $_POST['curso'];
+
+    foreach ($alumnos as $alumno) {
+        $obj->asignarEstudianteCurso($alumno, $seccion, $curso);
+    }
+    header("Location: ../Registro/asignar_estudiantes.php?success=1");
+}

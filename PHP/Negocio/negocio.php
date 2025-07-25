@@ -443,4 +443,91 @@ class Negocio
 
         return $res;
     }
+
+    function getAlumnosByCurso($curso_id) {
+    $sql = "SELECT a.AlumnoID, a.Nombres, a.Apellidos
+            FROM Matricula_Curso mc
+            INNER JOIN Matriculas m ON mc.MatriculaID = m.MatriculaID
+            INNER JOIN Alumnos a ON m.AlumnoID = a.AlumnoID
+            WHERE mc.CursoID = ?";
+    
+        $obj = new Conexion();
+        $cn = $obj->conecta();
+        $stmt = mysqli_prepare($cn, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $curso_id);
+        mysqli_stmt_execute($stmt);
+        $res = mysqli_stmt_get_result($stmt);
+        $alumnos = [];
+        while ($fila = mysqli_fetch_assoc($res)) {
+            $alumnos[] = $fila;
+        }
+        mysqli_stmt_close($stmt);
+        return $alumnos;
+    }
+
+    function saveAsistencia($alumno_id, $fecha, $estado) {
+        $sql = "INSERT INTO Asistencias (AlumnoID, Fecha, Estado) VALUES (?, ?, ?)
+                ON DUPLICATE KEY UPDATE Estado = VALUES(Estado)";
+        
+        $obj = new Conexion();
+        $cn = $obj->conecta();
+        $stmt = mysqli_prepare($cn, $sql);
+        mysqli_stmt_bind_param($stmt, "iss", $alumno_id, $fecha, $estado);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+    function getAsistenciaByCursoFecha($curso_id, $fecha) {
+    $sql = "SELECT a.Nombres, a.Apellidos, IFNULL(asist.Estado, 'Sin registro') as Estado
+            FROM Matricula_Curso mc
+            INNER JOIN Matriculas m ON mc.MatriculaID = m.MatriculaID
+            INNER JOIN Alumnos a ON m.AlumnoID = a.AlumnoID
+            LEFT JOIN Asistencias asist ON asist.AlumnoID = a.AlumnoID AND asist.Fecha = ?
+            WHERE mc.CursoID = ?";
+
+        $obj = new Conexion();
+        $cn  = $obj->conecta();
+        $stmt = mysqli_prepare($cn, $sql);
+        mysqli_stmt_bind_param($stmt, "si", $fecha, $curso_id);
+        mysqli_stmt_execute($stmt);
+        $res = mysqli_stmt_get_result($stmt);
+
+        $data = [];
+        while ($fila = mysqli_fetch_assoc($res)) {
+            $data[] = $fila;
+        }
+        mysqli_stmt_close($stmt);
+        return $data;
+    }
+
+    function asignarEstudianteCurso($alumno_id, $seccion_id, $curso_id) {
+    $obj = new Conexion();
+    $cn = $obj->conecta();
+
+    // Verificar si ya existe matrícula
+    $sqlCheck = "SELECT MatriculaID FROM Matriculas WHERE AlumnoID = ? AND SeccionID = ?";
+    $stmt = mysqli_prepare($cn, $sqlCheck);
+    mysqli_stmt_bind_param($stmt, "ii", $alumno_id, $seccion_id);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($res);
+
+    if ($row) {
+        $matricula_id = $row['MatriculaID'];
+    } else {
+            // Crear matrícula nueva
+            $sqlInsert = "INSERT INTO Matriculas (AlumnoID, SeccionID, Periodo_Inicio, Periodo_Fin, Estado)
+                        VALUES (?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 6 MONTH), 'Activo')";
+            $stmt2 = mysqli_prepare($cn, $sqlInsert);
+            mysqli_stmt_bind_param($stmt2, "ii", $alumno_id, $seccion_id);
+            mysqli_stmt_execute($stmt2);
+            $matricula_id = mysqli_insert_id($cn);
+        }
+
+        // Vincular el curso
+        $sqlCurso = "INSERT INTO Matricula_Curso (MatriculaID, CursoID) VALUES (?, ?)";
+        $stmt3 = mysqli_prepare($cn, $sqlCurso);
+        mysqli_stmt_bind_param($stmt3, "ii", $matricula_id, $curso_id);
+        return mysqli_stmt_execute($stmt3);
+    }
 }
